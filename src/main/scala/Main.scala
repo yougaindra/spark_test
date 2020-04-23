@@ -1,5 +1,7 @@
 
 
+import java.lang.management.ManagementFactory
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{count, isnull, lower, sum}
 import org.apache.log4j.Logger
@@ -7,9 +9,12 @@ import org.apache.log4j.Level
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val titlesFile= args(0)
-    val episodesFile = args(1)
-    val myList = args(2)
+
+    val isIDE = ManagementFactory.getRuntimeMXBean.getInputArguments.toString.contains("JetBrains")
+    val titlesFile= if(isIDE) getClass.getResource("/title.basics.tsv").getPath else args(0)
+    val episodesFile = if(isIDE) getClass.getResource("/title.episode.tsv").getPath else args(1)
+    val myList = if(isIDE) getClass.getResource("/myList.csv").getPath else  args(2)
+
     Logger.getLogger("org").setLevel(Level.OFF)
     Logger.getLogger("akka").setLevel(Level.OFF)
 
@@ -20,11 +25,6 @@ object Main {
       .getOrCreate()
 
     import spark.implicits._
-    //title should match exactly. Pay attention to '.',','
-    // don't change '&' with 'and'
-
-
-    print("titleFileBeingAccessed : " + titlesFile)
 
     val  allTitles = spark
       .read
