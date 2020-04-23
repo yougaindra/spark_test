@@ -1,8 +1,9 @@
 Trying out spark job to calculate time used to watch TV using imdb dataset
 
-Download : https://datasets.imdbws.com/name.basics.tsv.gz
+Download : 
+https://datasets.imdbws.com/name.basics.tsv.gz,
 
-           https://datasets.imdbws.com/title.episode.tsv.gz
+https://datasets.imdbws.com/title.episode.tsv.gz
            
 
 
